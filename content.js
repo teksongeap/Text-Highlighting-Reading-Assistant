@@ -1,11 +1,25 @@
 let highlightColor = '#ffff00';
+let enableHighlight = true;
 let timeoutId = null;
+
+chrome.storage.sync.get(['highlightColor', 'enableHighlight'], function(data) {
+  highlightColor = data.highlightColor || '#ffff00';
+  enableHighlight = data.enableHighlight !== false;
+});
+
+chrome.storage.onChanged.addListener(function(changes, namespace) {
+  if (changes.enableHighlight) {
+    enableHighlight = changes.enableHighlight.newValue !== false;
+  }
+});
 
 chrome.runtime.sendMessage({ action: 'getHighlightColor' }, function(response) {
   highlightColor = response.color;
 });
 
 document.addEventListener('mouseover', function(event) {
+  if (!enableHighlight) return;
+
   const target = event.target;
   const text = target.textContent.trim();
 
