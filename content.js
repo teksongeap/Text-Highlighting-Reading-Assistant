@@ -37,6 +37,7 @@ document.addEventListener('mouseover', function(event) {
       highlightElement.style.width = `${rect.width}px`;
       highlightElement.style.height = `${rect.height}px`;
       highlightElement.style.transition = 'opacity 0.2s ease-in-out';
+      highlightElement.style.borderRadius = '4px'; // Add this line to round off the edges
       highlightElement.setAttribute('data-highlight', 'true');
       document.body.appendChild(highlightElement);
 
